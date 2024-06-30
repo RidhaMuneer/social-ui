@@ -1,6 +1,5 @@
 // icons
 import useUser from "@/hooks/user/useUser";
-import EyeIcon from "@/icons/EyeIcon";
 
 // react
 import { Link, useNavigate } from "react-router-dom";
@@ -66,10 +65,6 @@ const Login = () => {
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className="absolute bottom-1 right-1 h-7 w-7">
-                  <EyeIcon className="h-4 w-4" />
-                  <span className="sr-only">Toggle password visibility</span>
-                </button>
               </div>
             </div>
           </div>
@@ -85,7 +80,7 @@ const Login = () => {
           </div>
           {message !== null && (
             <div className="flex justify-start">
-              <p className="text-red-600">{message}</p>
+              <p className="text-red-600 underline">{message}</p>
             </div>
           )}
           <div>
