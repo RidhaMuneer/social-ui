@@ -13,10 +13,10 @@ import HeartIcon from "@/icons/HeartIcon";
 
 const PostUtils: React.FC<PostUtilsProps> = ({ post_id }) => {
   const [likeClicked, setLikeClicked] = useState<boolean>(false);
-  const { accessToken } = useUser();
+  const { handleGetAccessToken } = useUser();
   const handleLikeClick = async () => {
     const headers = new Headers();
-    headers.append("Authorization", `Bearer ${accessToken}`);
+    headers.append("Authorization", `Bearer ${handleGetAccessToken()}`);
     headers.append("Content-Type", "application/json");
     const response = await fetch("http://127.0.0.1:8000/app/like", {
       headers: headers,
