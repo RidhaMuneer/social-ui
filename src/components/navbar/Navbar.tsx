@@ -7,6 +7,8 @@ import InboxIcon from "@/icons/InboxIcon";
 import PlusIcon from "@/icons/PlusIcon";
 import SearchIcon from "@/icons/SearchIcon";
 import SettingsIcon from "@/icons/SettingsIcon";
+
+// React
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -41,7 +43,7 @@ const Navbar = () => {
               </button>
               <button className="flex flex-col items-center justify-center gap-1 text-card-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                 <InboxIcon className="w-6 h-6" />
-                <span className="text-sm font-medium">Inbox</span>
+                <span className="text-sm font-medium">Public Chat</span>
               </button>
             </div>
             <button className="flex flex-col items-center justify-center gap-1 text-card-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
@@ -76,7 +78,7 @@ const Navbar = () => {
             </button>
             <button className="flex flex-col items-center justify-center gap-1 text-card-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
               <InboxIcon className="w-6 h-6" />
-              <span className="text-sm font-medium">Inbox</span>
+              <span className="text-sm font-medium">Public Chat</span>
             </button>
             <button className="flex flex-col items-center justify-center gap-1 text-card-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
               <SettingsIcon className="w-6 h-6" />
