@@ -14,6 +14,11 @@ const useUser = () => {
     return sessionStorage.getItem("access_token");
   }
 
+  const handleLogout = () => {
+    setUser(undefined);
+    sessionStorage.removeItem("access_token");
+  }
+
   const getUserProfile = async (id?: number) => {
     if (id) {
       const response = await fetch(`http://127.0.0.1:8000/app/user/${id}`);
@@ -41,7 +46,8 @@ const useUser = () => {
     accessToken,
     getUserProfile,
     user,
-    handleGetAccessToken
+    handleGetAccessToken,
+    handleLogout
   };
 };
 
