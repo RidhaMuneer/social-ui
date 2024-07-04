@@ -30,7 +30,7 @@ const CreatePost = () => {
     const header = new Headers();
     const access_token = handleGetAccessToken();
     header.append("Authorization", `Bearer ${access_token}`);
-    const response = await fetch("http://127.0.0.1:8000/app/posts", {
+    const response = await fetch("http://127.0.0.1:8000/app/posts/", {
       method: "POST",
       body: formData,
       headers: header

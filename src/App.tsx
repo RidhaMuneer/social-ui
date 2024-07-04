@@ -9,6 +9,7 @@ import Home from "@/pages/Home";
 import Search from "@/pages/Search";
 import CreatePost from "@/pages/CreatePost";
 import Login from "@/pages/Login";
+import Test from "@/pages/Test";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         </Route>
         <Route path="/auth/register" element={<Registration />} />
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/chat" element={<Test />} />
       </Routes>
     </Router>
   );
