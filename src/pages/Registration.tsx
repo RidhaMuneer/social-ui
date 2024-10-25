@@ -29,7 +29,7 @@ const Registration = () => {
     formData.append("password", data.password);
     formData.append("file", file);
 
-    const response = await fetch("http://127.0.0.1:8000/app/register", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL_PROD}/app/register`, {
       method: "POST",
       body: formData,
     });

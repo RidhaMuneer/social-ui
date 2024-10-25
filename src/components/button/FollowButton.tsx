@@ -10,7 +10,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ id }) => {
     const header = new Headers();
     header.append("Authorization", `Bearer ${handleGetAccessToken()}`);
     header.append("Content-Type", "application/json");
-    const response = await fetch("http://127.0.0.1:8000/app/follow/", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL_PROD}/app/follow/`, {
       method: "POST",
       headers: header,
       body: JSON.stringify({

@@ -18,7 +18,7 @@ const PostUtils: React.FC<PostUtilsProps> = ({ post_id }) => {
     const headers = new Headers();
     headers.append("Authorization", `Bearer ${handleGetAccessToken()}`);
     headers.append("Content-Type", "application/json");
-    const response = await fetch("http://127.0.0.1:8000/app/like", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL_PROD}/app/like`, {
       headers: headers,
       method: "POST",
       body: JSON.stringify({

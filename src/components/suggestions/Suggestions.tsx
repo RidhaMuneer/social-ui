@@ -15,7 +15,7 @@ const Suggestions = () => {
       const header = new Headers();
       header.append("Authorization", `Bearer ${handleGetAccessToken()}`);
       const response = await fetch(
-        "http://127.0.0.1:8000/app/users/suggestions",
+        `${import.meta.env.VITE_API_URL_PROD}/app/users/suggestions`,
         {
           method: "GET",
           headers: header,

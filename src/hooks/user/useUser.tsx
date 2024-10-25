@@ -21,14 +21,14 @@ const useUser = () => {
 
   const getUserProfile = async (id?: number) => {
     if (id) {
-      const response = await fetch(`http://127.0.0.1:8000/app/user/${id}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL_PROD}/app/user/${id}`);
       if (response.ok) {
         return await response.json();
       }
     } else {
       const headers = new Headers();
       headers.append("Authorization", `Bearer ${handleGetAccessToken()}`);
-      const response = await fetch("http://127.0.0.1:8000/app/user", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_PROD}/app/user`, {
         headers: headers,
       });
       if (response.ok) {

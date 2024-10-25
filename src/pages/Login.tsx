@@ -19,7 +19,7 @@ const Login = () => {
     const formData = new FormData();
     formData.append("username", email!);
     formData.append("password", password!);
-    const response = await fetch("http://127.0.0.1:8000/app/login", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL_PROD}/app/login`, {
       method: "POST",
       body: formData
     });
