@@ -9,7 +9,7 @@ const usePosts = () => {
   const [error, setError] = useState<string>();
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_PROD}0/app/posts/`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL_PROD}/app/posts/`);
       if (response.ok) {
         const responseJson = await response.json();
         setPosts(responseJson);
