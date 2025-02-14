@@ -35,3 +35,10 @@ export type PostCardProps = {
 export type PostUtilsProps = {
   post_id: number;
 };
+
+export type Comment = {
+  id: string
+  content: string;
+  created_at: string;
+  user: User
+}

@@ -3,8 +3,8 @@ export type User = {
   username: string;
   email: string;
   image_url: string;
-  follower_count: number;
-  following_count: number;
+  follower_count?: number;
+  following_count?: number;
 };
 
 export type UserCardProps = {
