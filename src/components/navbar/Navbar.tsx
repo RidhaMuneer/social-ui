@@ -43,7 +43,7 @@ const Navbar = () => {
               </button>
               <button className="flex flex-col items-center justify-center gap-1 text-card-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                 <InboxIcon className="w-6 h-6" />
-                <span className="text-sm font-medium">Public Chat</span>
+                <span className="text-sm font-medium">Chat</span>
               </button>
             </div>
             <button className="flex flex-col items-center justify-center gap-1 text-card-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
@@ -78,7 +78,7 @@ const Navbar = () => {
             </button>
             <button className="flex flex-col items-center justify-center gap-1 text-card-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
               <InboxIcon className="w-6 h-6" />
-              <span className="text-sm font-medium">Public Chat</span>
+              <span className="text-sm font-medium">Chat</span>
             </button>
             <button className="flex flex-col items-center justify-center gap-1 text-card-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
               <SettingsIcon className="w-6 h-6" />

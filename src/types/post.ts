@@ -10,6 +10,7 @@ export type PostProps = {
   user: PostUserProps;
   img: PostImageProps;
   likes: number;
+  isLiked: boolean;
   content: string;
   date: string;
 };
@@ -24,6 +25,7 @@ export type PostCardProps = {
   content: string;
   published: boolean;
   image_url: string;
+  isLiked: boolean;
   created_at: string;
   owner_id: number;
   like_count: number;
