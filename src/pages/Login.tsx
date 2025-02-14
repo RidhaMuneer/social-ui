@@ -2,11 +2,12 @@ import useUser from "@/hooks/user/useUser"
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react"
+import { createRecord } from "@/api/requests"
 
 const Login = () => {
   const [email, setEmail] = useState<string | null>(null)
   const [password, setPassword] = useState<string | null>(null)
-  const [message, setMessage] = useState<string | null>(null)
+  const [message, setMessage] = useState<string | null>(null);;
   const [isLoading, setIsLoading] = useState(false)
 
   const { handleSetAccessToken } = useUser()
@@ -15,23 +16,12 @@ const Login = () => {
   const onSubmit = async () => {
     setMessage(null)
     setIsLoading(true)
-    const formData = new FormData()
-    formData.append("username", email!)
-    formData.append("password", password!)
     try {
-      const response = await fetch(`${import.meta.env.VITE_PUBLIC_API_DEV}/app/login`, {
-        method: "POST",
-        body: formData,
-      })
-      if (response.ok) {
-        const responseJson = await response.json()
-        handleSetAccessToken(responseJson.access_token)
-        navigate("/home")
-      } else {
-        setMessage("Invalid email or password")
-      }
+      const response = await createRecord<{email: string, password: string}, {access_token: string}>('/app/login', {email: email!, password: password!});
+      handleSetAccessToken(response.access_token)
+      navigate("/home")
     } catch (error) {
-      setMessage("An error occurred. Please try again.")
+      setMessage("Invalid entries");
     } finally {
       setIsLoading(false)
     }
