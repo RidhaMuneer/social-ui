@@ -7,7 +7,7 @@ import SettingsIcon from "@/icons/SettingsIcon"
 import { useNavigate } from "react-router-dom"
 
 const Navbar = () => {
-  const isMd = useScreenWidthMatch(800)
+  const isMd = useScreenWidthMatch(768)
   const navigate = useNavigate()
 
   const NavButton = ({

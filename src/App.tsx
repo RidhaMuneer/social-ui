@@ -10,6 +10,7 @@ import Search from "@/pages/Search";
 import CreatePost from "@/pages/CreatePost";
 import Login from "@/pages/Login";
 import Test from "@/pages/Test";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/home" element={<Home/>}/>
           <Route path="/search" element={<Search/>}/>
           <Route path="/post" element={<CreatePost/>}/>
+          <Route path="/user/:id" element={<Profile/>}/>
         </Route>
         <Route path="/auth/register" element={<Registration />} />
         <Route path="/auth/login" element={<Login />} />

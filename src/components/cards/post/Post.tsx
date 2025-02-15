@@ -15,6 +15,7 @@ import { createRecord, getRecords } from "@/api/requests"
 
 // hooks
 import useUser from "@/hooks/user/useUser"
+import { useNavigate } from "react-router-dom"
 
 const Post: React.FC<PostProps> = ({ user, img, likes: currentLikes, content, id, date, isLiked: isAlreadyLiked }) => {
   const [isCommentsOpen, setIsCommentsOpen] = useState(false)
@@ -23,6 +24,7 @@ const Post: React.FC<PostProps> = ({ user, img, likes: currentLikes, content, id
   const [isLiked, setIsLiked] = useState<boolean>(isAlreadyLiked);
   const [likes, setLikes] = useState<number>(currentLikes);
   const { user: currentUser } = useUser();
+  const navigate = useNavigate();
 
   const toggleComments = async () => {
     setIsCommentsOpen(!isCommentsOpen)
@@ -58,6 +60,10 @@ const Post: React.FC<PostProps> = ({ user, img, likes: currentLikes, content, id
     }
   }
 
+  const handleUserClick = () => {
+    navigate(`/user/${user.id}`)
+  }
+
   return (
     <article className="max-w-[500px] w-full bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
       <div className="p-6">
@@ -66,10 +72,11 @@ const Post: React.FC<PostProps> = ({ user, img, likes: currentLikes, content, id
             <img
               src={user.img.src || "/placeholder.svg"}
               alt={user.img.alt}
-              className="w-12 h-12 rounded-full object-cover border-2 border-gray-200 shadow-sm"
+              className="w-12 h-12 rounded-full object-cover border-2 border-gray-200 shadow-sm cursor-pointer"
+              onClick={handleUserClick}
             />
             <div>
-              <p className="font-bold text-gray-900 text-sm">@{user.user}</p>
+              <p className="font-bold text-gray-900 text-sm cursor-pointer" onClick={handleUserClick}>@{user.user}</p>
               <p className="text-xs text-gray-500 mt-1">{dateFormat(date)}</p>
             </div>
           </div>
@@ -149,11 +156,12 @@ const Post: React.FC<PostProps> = ({ user, img, likes: currentLikes, content, id
                   <img
                     src={comment.user.image_url || "/placeholder.svg"}
                     alt={`@${comment.user}`}
-                    className="min-w-8 min-h-8  max-w-8 max-h-8 rounded-full object-cover"
+                    onClick={() => navigate(`/user/${comment.user.id}`)}
+                    className="min-w-8 min-h-8 max-w-8 max-h-8 cursor-pointer rounded-full object-cover"
                   />
                   <div className="flex-grow bg-white p-3 rounded-lg shadow-sm">
                     <div className="flex items-center justify-between mb-1">
-                      <p className="font-semibold text-sm text-gray-900">@{comment.user.username}</p>
+                      <p className="font-semibold text-sm text-gray-900 cursor-pointer" onClick={() => navigate(`/user/${comment.user.id}`)}>@{comment.user.username}</p>
                       <p className="text-xs text-gray-500">{dateFormat(comment.created_at)}</p>
                     </div>
                     <p className="text-sm text-gray-700">{comment.content}</p>

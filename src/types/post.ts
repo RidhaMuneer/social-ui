@@ -18,6 +18,7 @@ export type PostProps = {
 export type PostUserProps = {
   img: PostImageProps;
   user: string;
+  id: number;
 };
 
 export type PostCardProps = {

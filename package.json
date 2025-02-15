@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
     "@rollup/plugin-alias": "^5.1.0",
