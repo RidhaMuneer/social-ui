@@ -21,11 +21,13 @@ export async function makeRequest<T = unknown, R = unknown>(
   params?: Record<string, unknown>
 ): Promise<R> {
   try {
+    const isFormData = data instanceof FormData;
     const response = await axiosInstance.request<R>({
       method,
       url: endpoint,
       data,
       params,
+      headers: isFormData ? { "Content-Type": "multipart/form-data" } : undefined,
     });
     return response.data;
   } catch (error) {
@@ -82,10 +84,7 @@ export async function getRecords<R>(
  * @returns {Promise<R>} A promise that resolves to the server response data.
  * @throws Will throw an error if the request fails.
  */
-export async function createRecord<T, R>(
-  endpoint: string,
-  data: T
-): Promise<R> {
+export async function createRecord<T, R>(endpoint: string, data: T): Promise<R> {
   return makeRequest<T, R>("POST", endpoint, data);
 }
 

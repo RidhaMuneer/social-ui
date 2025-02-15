@@ -22,7 +22,7 @@ const Preview = () => {
             />
             <p className="text-sm text-muted-foreground">@{user.username}</p>
           </article>
-          <Suggestions />
+          {/* <Suggestions /> */}
         </aside>
       ) : (
         <>

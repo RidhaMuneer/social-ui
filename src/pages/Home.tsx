@@ -1,12 +1,10 @@
 import Post from "@/components/cards/post/Post";
 import usePosts from "@/hooks/post/usePosts";
-import { PostCardProps } from "@/types/post";
-import { useEffect, useState } from "react";
 
 const Home = () => {
   const { posts } = usePosts();
   return (
-    <div className="flex flex-col justify-start items-center h-auto gap-4 min-h-screen w-full overflow-y">
+    <div className="flex flex-col justify-start items-center gap-4 mb-16 lg:mb-2 min-h-screen w-full overflow-y">
       <div className="gap-2 flex flex-col my-5">
         {posts?.map((post) => (
           <Post
