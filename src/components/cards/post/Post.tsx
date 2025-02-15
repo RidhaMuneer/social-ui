@@ -76,13 +76,13 @@ const Post: React.FC<PostProps> = ({ user, img, likes: currentLikes, content, id
         </div>
       </div>
 
-      <div className="relative group">
+      <div className="relative overflow-hidden group">
         <img
           src={img.src || "/placeholder.svg"}
           alt={img.alt}
           className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 group-hover:scale-105 origin-center" />
       </div>
 
       <div className="p-6">

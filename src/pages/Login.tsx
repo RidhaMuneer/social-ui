@@ -100,7 +100,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className={`group relative w-full flex justify-center py-2 px-4 border text-sm font-medium rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors text-black ${
+              className={`group relative w-full flex justify-center py-2 px-4 border text-sm font-medium rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors text-white ${
                 !email || !password || isLoading ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={!email || !password || isLoading}
