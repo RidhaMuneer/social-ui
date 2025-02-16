@@ -17,7 +17,7 @@ const SearchInput = <T,>({ type, setResults }: SearchProps<T>) => {
   }
 
   return (
-    <div>
+    <div className="w-full">
       <div className="relative w-full max-w-md mx-auto">
         <input
           placeholder={`Search ${type}...`}

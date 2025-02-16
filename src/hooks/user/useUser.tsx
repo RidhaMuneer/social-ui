@@ -1,3 +1,4 @@
+import { getRecords } from "@/api/requests";
 import { User } from "@/types/user";
 import { useState, useEffect } from "react";
 
@@ -19,27 +20,21 @@ const useUser = () => {
     sessionStorage.removeItem("access_token");
   }
 
-  const getUserProfile = async (id?: number) => {
-    if (id) {
-      const response = await fetch(`${import.meta.env.VITE_PUBLIC_API_DEV}/app/user/${id}`);
-      if (response.ok) {
-        return await response.json();
-      }
-    } else {
-      const headers = new Headers();
-      headers.append("Authorization", `Bearer ${handleGetAccessToken()}`);
-      const response = await fetch(`${import.meta.env.VITE_PUBLIC_API_DEV}/app/user`, {
-        headers: headers,
-      });
-      if (response.ok) {
-        setUser(await response.json());
-      }
+  const isLoggedIn = () => {
+    return !!sessionStorage.getItem("access_token");
+  }
+
+  const getUserProfile = async () => {
+    try {
+      const response = await getRecords<User>('app/user')
+      setUser(response);
+    } catch (error) {
     }
   };
 
   useEffect(() => {
     getUserProfile();
-  }, [accessToken]);
+  }, []);
 
   return {
     handleSetAccessToken,
@@ -47,7 +42,8 @@ const useUser = () => {
     getUserProfile,
     user,
     handleGetAccessToken,
-    handleLogout
+    handleLogout,
+    isLoggedIn
   };
 };
 
