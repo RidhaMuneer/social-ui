@@ -31,7 +31,7 @@ const Profile = () => {
         </div>
 
         {/* User Information Section */}
-        <div className="px-6 py-8 sm:px-8 flex flex-col md:px-10 items-center justify-center space-y-4 md:space-y-0 md:space-x-6 -mt-16 relative z-10">
+        <div className="px-6 py-8 sm:px-8 flex flex-col md:px-10 items-center justify-center -mt-16 relative z-10">
           <div className="relative w-32 h-32 md:w-40 md:h-40 border-4 border-white rounded-full shadow-md overflow-hidden">
             <img src={user?.image_url || "/placeholder.svg"} alt={user?.username || "User"} className="object-cover" />
           </div>
@@ -185,7 +185,7 @@ const LoadingProfile = () => {
         <div className="h-48 md:h-64 bg-gray-300"></div>
 
         {/* User Information Section */}
-        <div className="px-6 py-8 sm:px-8 flex flex-col md:px-10 items-center justify-center space-y-4 md:space-y-0 md:space-x-6 -mt-16 relative z-10">
+        <div className="px-6 py-8 sm:px-8 flex flex-col md:px-10 items-center justify-center -mt-16 relative z-10">
           <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-gray-300"></div>
           <div className="text-center md:text-left flex flex-col items-center justify-center">
             <div className="w-48 h-8 bg-gray-300 rounded"></div>

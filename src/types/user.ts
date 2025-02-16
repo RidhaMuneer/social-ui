@@ -20,6 +20,7 @@ type Post = {
 }
 
 export type UserCardProps = {
+  id: number;
   username: string;
   image_url: string;
 }
