@@ -34,7 +34,7 @@ const Navbar = () => {
       </nav>
       <div className="flex flex-col items-center space-y-4">
         <NavButton icon={Settings} label="Settings" />
-        <img src={user?.image_url} alt={user?.username} className="w-10 h-10 rounded-full cursor-pointer" />
+        <img src={user?.image_url} alt={user?.username} className="w-10 h-10 rounded-full cursor-pointer object-cover" />
       </div>
     </div>
   )
@@ -47,7 +47,7 @@ const Navbar = () => {
         <NavButton icon={PlusSquareIcon} label="Post" onClick={() => navigate("/post")} />
         <NavButton icon={Inbox} label="Chat" />
         <NavButton icon={Settings} label="Settings" />
-        <img src={user?.image_url} alt={user?.username} className="w-10 h-10 rounded-full cursor-pointer" />
+        <img src={user?.image_url} alt={user?.username} className="w-10 h-10 rounded-full cursor-pointer object-cover" />
       </nav>
     </div>
   )
