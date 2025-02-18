@@ -11,14 +11,11 @@ import CreatePost from "@/pages/CreatePost";
 import Login from "@/pages/Login";
 import Test from "@/pages/Test";
 import Profile from "./pages/Profile";
-import useUser from "./hooks/user/useUser";
 
 function App() {
-  const { isLoggedIn } = useUser();
   return (
     <Router>
       <Routes>
-        {isLoggedIn() && (
           <Route path="/" element={<StandardLayout />} >
             <Route path="/home" element={<Home />} />
             <Route path="/search" element={<Search />} />
@@ -26,7 +23,6 @@ function App() {
             <Route path="/user/:id" element={<Profile />} />
             <Route path="/chat" element={<Test />} />
           </Route>
-        )}
         <Route path="/auth/register" element={<Registration />} />
         <Route path="/auth/login" element={<Login />} />
       </Routes>

@@ -20,10 +20,6 @@ const useUser = () => {
     sessionStorage.removeItem("access_token");
   }
 
-  const isLoggedIn = () => {
-    return !!sessionStorage.getItem("access_token");
-  }
-
   const getUserProfile = async () => {
     try {
       const response = await getRecords<User>('app/user')
@@ -42,8 +38,7 @@ const useUser = () => {
     getUserProfile,
     user,
     handleGetAccessToken,
-    handleLogout,
-    isLoggedIn
+    handleLogout
   };
 };
 
