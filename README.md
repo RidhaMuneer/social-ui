@@ -32,7 +32,7 @@ Ensure you have the following installed on your machine:
    npm install  # or yarn install
    ```
 
-3. Create a `.env` file and configure the necessary environment variables (refer to the API documentation for required variables).
+3. Create a `.env` file and configure the necessary environment variables (VITE_PUBLIC_API_DEV=API_URL).
 
 4. Start the development server:
    ```sh
