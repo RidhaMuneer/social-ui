@@ -16,15 +16,18 @@ const Login = () => {
   const onSubmit = async () => {
     setMessage(null)
     setIsLoading(true)
+
     try {
-      const response = await createRecord<{ email: string; password: string }, { access_token: string }>("/app/login", {
-        email: email!,
-        password: password!,
-      })
+      const formData = new FormData()
+      formData.append("email", email!)
+      formData.append("password", password!)
+
+      const response = await createRecord<FormData, { access_token: string }>("/app/login", formData)
+
       handleSetAccessToken(response.access_token)
       navigate("/home")
     } catch (error) {
-      setMessage("Invalid entries")
+      setMessage("Invalid credentials")
     } finally {
       setIsLoading(false)
     }
