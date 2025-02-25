@@ -37,7 +37,7 @@ const useChat = (userId: string) => {
     setChatPartner(null);
 
     setTimeout(() => {
-      const socket = new WebSocket(`ws://${import.meta.env.VITE_PUBLIC_WS}/ws/${userId}${forceNewMatch ? '?force_new=true' : ''}`);
+      const socket = new WebSocket(`wss://${import.meta.env.VITE_PUBLIC_WS}/ws/${userId}${forceNewMatch ? '?force_new=true' : ''}`);
       ws.current = socket;
 
       socket.onopen = () => {
