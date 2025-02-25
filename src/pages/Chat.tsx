@@ -165,7 +165,7 @@ const ChatPage = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                     >
-                      <div className={`w-full rounded-xl mx-24 shadow-md`}>
+                      <div className={`w-full rounded-xl mx-1 md:mx-24 shadow-md`}>
                         {msg.child}
                       </div>
                     </motion.div>
