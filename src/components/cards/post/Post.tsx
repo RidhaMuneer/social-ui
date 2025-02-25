@@ -82,7 +82,7 @@ const Post: React.FC<PostProps> = ({ user, img, likes: currentLikes, content, id
         </div>
       </div>
 
-      <div className="relative overflow-hidden group max-w-[500px] max-h-[500px]">
+      <div className="relative overflow-hidden group max-h-[300px] md:max-w-[400px] md:max-h-[400px]">
         <img
           src={img.src || "/placeholder.svg"}
           alt={img.alt}
