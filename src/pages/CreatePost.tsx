@@ -31,7 +31,7 @@ const CreatePost = () => {
   
     try {
       await createRecord<FormData, { message: string }>("app/posts/", formData);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       alert("An error occurred while creating the post.");
     }
