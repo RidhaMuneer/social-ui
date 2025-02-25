@@ -2,37 +2,17 @@ import { useState, useEffect, useRef } from "react"
 import useChat from "@/hooks/useChat"
 import useUser from "@/hooks/user/useUser"
 import { motion, AnimatePresence } from "framer-motion"
-import { Sparkles, Send, Loader2, Share2, X } from "lucide-react"
-import { getRecords } from "@/api/requests"
-import type { User } from "@/types/user"
+import { Sparkles, Send, Loader2, Share2 } from "lucide-react"
 
 const ChatPage = () => {
   const { user } = useUser()
   const userId = user?.id.toString() || "guest"
-  const { messages, sendMessage, findMatch, isMatching, isMatched, chatPartner } = useChat(userId)
+  const { messages, sendMessage, findMatch, isMatching, isMatched } = useChat(userId)
   const [input, setInput] = useState("")
-  const [sharedProfile, setSharedProfile] = useState<User | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
-
-  useEffect(() => {
-    const checkForProfileShare = async () => {
-      const lastMessage = messages[messages.length - 1]
-      if (lastMessage && lastMessage.sender !== "You" && lastMessage.content.startsWith("[id]:")) {
-        const sharedUserId = lastMessage.content.split(":")[1].trim()
-        try {
-          const response = await getRecords<User>(`/app/user/${sharedUserId}`)
-          setSharedProfile(response)
-        } catch (error) {
-          console.error("Error fetching shared profile:", error)
-        }
-      }
-    }
-
-    checkForProfileShare()
   }, [messages])
 
   const scrollToBottom = () => {
@@ -164,7 +144,7 @@ const ChatPage = () => {
 
                 {messages.map((msg, index) => {
                   const classes = getMessageClasses(msg.sender)
-                  return (
+                  if (!msg.child) return (
                     <motion.div
                       key={index}
                       className={classes.container}
@@ -174,6 +154,19 @@ const ChatPage = () => {
                     >
                       <div className={`max-w-xs px-5 py-3 rounded-2xl shadow-md ${classes.bubble}`}>
                         <p className="break-words">{msg.content}</p>
+                      </div>
+                    </motion.div>
+                  )
+                  if (msg.child) return (
+                    <motion.div
+                      key={index}
+                      className={classes.container}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                    >
+                      <div className={`w-full rounded-xl mx-24 shadow-md`}>
+                        {msg.child}
                       </div>
                     </motion.div>
                   )
@@ -207,11 +200,10 @@ const ChatPage = () => {
                 whileTap={{ scale: 0.95 }}
                 type="submit"
                 disabled={!input.trim()}
-                className={`px-6 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 ${
-                  input.trim()
+                className={`px-6 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 ${input.trim()
                     ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 shadow-md"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+                  }`}
               >
                 <Send className="h-5 w-5" />
               </motion.button>
@@ -235,37 +227,6 @@ const ChatPage = () => {
             >
               Find a New Chat Partner
             </motion.button>
-          </motion.div>
-        )}
-
-        {/* Shared Profile Modal */}
-        {sharedProfile && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              className="bg-white rounded-lg p-6 max-w-md w-full relative"
-            >
-              <button
-                onClick={() => setSharedProfile(null)}
-                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-6 w-6" />
-              </button>
-              <h2 className="text-2xl font-bold mb-4">User Profile</h2>
-              <div className="space-y-2">
-                <p>
-                  <strong>Username:</strong> {sharedProfile.username}
-                </p>
-                
-              </div>
-            </motion.div>
           </motion.div>
         )}
       </motion.div>

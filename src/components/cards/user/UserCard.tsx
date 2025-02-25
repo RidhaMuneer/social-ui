@@ -3,10 +3,12 @@ import { UserCardProps } from "@/types/user"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserPlus, UserMinus } from "lucide-react"
+import useUser from "@/hooks/user/useUser"
 
 const UserCard: React.FC<UserCardProps> = ({ username, image_url, id }) => {
   const navigate = useNavigate()
   const [isFollowed, setIsFollowed] = useState<boolean>(false)
+  const { user } = useUser()
 
   const handleFollow = async () => {
     try {
@@ -38,26 +40,27 @@ const UserCard: React.FC<UserCardProps> = ({ username, image_url, id }) => {
           <p className="text-xs text-gray-500">User</p>
         </div>
       </div>
-      <button
-        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center ${
-          isFollowed
-            ? "bg-purple-100 text-purple-600 hover:bg-purple-200"
-            : "bg-purple-600 text-white hover:bg-purple-700"
-        }`}
-        onClick={handleFollow}
-      >
-        {isFollowed ? (
-          <>
-            <UserMinus size={16} className="mr-2" />
-            Unfollow
-          </>
-        ) : (
-          <>
-            <UserPlus size={16} className="mr-2" />
-            Follow
-          </>
-        )}
-      </button>
+      {user?.id !== id && (
+        <button
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center ${isFollowed
+              ? "bg-purple-100 text-purple-600 hover:bg-purple-200"
+              : "bg-purple-600 text-white hover:bg-purple-700"
+            }`}
+          onClick={handleFollow}
+        >
+          {isFollowed ? (
+            <>
+              <UserMinus size={16} className="mr-2" />
+              Unfollow
+            </>
+          ) : (
+            <>
+              <UserPlus size={16} className="mr-2" />
+              Follow
+            </>
+          )}
+        </button>
+      )}
     </article>
   )
 }
