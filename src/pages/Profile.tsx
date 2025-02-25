@@ -1,6 +1,6 @@
 import { useGetUser } from "@/hooks/user/useGetUser"
 import { dateFormat } from "@/utils/dateFormat"
-import { Mail, Grid, Archive, Heart, ImageIcon, UserMinus, UserPlus } from "lucide-react"
+import { Grid, Archive, Heart, ImageIcon, UserMinus, UserPlus } from "lucide-react"
 import { useState } from "react"
 import { Dialog } from "@headlessui/react"
 import { PostCardProps } from "@/types/post"
@@ -53,10 +53,6 @@ const Profile = () => {
             />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">@{user!.username}</h1>
-          <div className="flex items-center justify-center text-gray-600 mb-4">
-            <Mail className="w-5 h-5 mr-2" />
-            <span>{user!.email}</span>
-          </div>
           <div className="flex space-x-8 text-sm mb-6">
             <div className="flex flex-col items-center">
               <span className="text-2xl font-bold text-gray-800">{user!.follower_count}</span>
