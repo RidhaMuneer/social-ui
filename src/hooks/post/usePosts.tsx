@@ -9,7 +9,7 @@ import { getRecords } from "@/api/requests";
 
 const usePosts = () => {
   const [posts, setPosts] = useState<PostCardProps[]>();
-  const [error, setError] = useState<string>();
+  const [error] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchPosts = async() => {
