@@ -17,7 +17,7 @@ function App() {
     <Router>
       <Routes>
           <Route path="/" element={<StandardLayout />} >
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/post" element={<CreatePost />} />
             <Route path="/user/:id" element={<Profile />} />

@@ -38,7 +38,7 @@ const Navbar = () => {
             <img className="h-14 w-10 object-cover" src="/logo.png" alt="Logo" />
           </div>
           <nav className="flex space-x-4">
-            <NavButton icon={Home} label="Home" onClick={() => navigate("/home")} />
+            <NavButton icon={Home} label="Home" onClick={() => navigate("/")} />
             <NavButton icon={Search} label="Search" onClick={() => navigate("/search")} />
             <NavButton icon={PlusSquareIcon} label="Post" onClick={() => navigate("/post")} />
             <NavButton icon={Inbox} label="Chat" onClick={() => navigate("/chat")} />
