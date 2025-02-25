@@ -35,9 +35,9 @@ const Login = () => {
 
   const hexagonalPattern = {
     "--s": "92px",
-    "--c1": "#f2f2f2",
-    "--c2": "#c2d4ff",
-    "--c3": "#2563eb",
+    "--c1": "#f3e8ff",
+    "--c2": "#e9d5ff",
+    "--c3": "#d8b4fe",
     "--_g": "0 120deg,#0000 0",
     background: `
       conic-gradient(at calc(250%/3) calc(100%/3),var(--c3) var(--_g)),
@@ -52,7 +52,7 @@ const Login = () => {
   } as React.CSSProperties
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
       {/* Hexagonal pattern */}
       <div className="md:w-1/2 fixed top-0 left-0 w-full md:relative h-64 md:h-auto" style={hexagonalPattern} />
 
@@ -75,12 +75,12 @@ const Login = () => {
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400" size={20} />
                 <input
                   id="email-address"
                   type="email"
                   required
-                  className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="pl-10 w-full px-3 py-2 border border-purple-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Email address"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -89,12 +89,12 @@ const Login = () => {
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400" size={20} />
                 <input
                   id="password"
                   type="password"
                   required
-                  className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="pl-10 w-full px-3 py-2 border border-purple-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -110,7 +110,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors ${
+                className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors ${
                   !email || !password || isLoading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 disabled={!email || !password || isLoading}
@@ -132,7 +132,7 @@ const Login = () => {
 
           <p className="mt-2 text-center text-sm text-gray-600">
             Don't have an account?{" "}
-            <Link to="/auth/register" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+            <Link to="/auth/register" className="font-medium text-purple-600 hover:text-purple-500 transition-colors">
               Sign up
             </Link>
           </p>

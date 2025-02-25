@@ -1,110 +1,162 @@
 import { useGetUser } from "@/hooks/user/useGetUser"
 import { dateFormat } from "@/utils/dateFormat"
-import { UserIcon, Mail, UsersIcon, Grid, Archive } from "lucide-react"
+import { Mail, Grid, Archive, Heart, ImageIcon, UserMinus, UserPlus } from "lucide-react"
 import { useState } from "react"
 import { Dialog } from "@headlessui/react"
 import { PostCardProps } from "@/types/post"
 import Post from "@/components/cards/post/Post"
+import useUser from "@/hooks/user/useUser"
+import Button from "@/components/button/Button"
+import { createRecord } from "@/api/requests"
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("posts")
   const { user, isLoading } = useGetUser()
+  const [isFollowed, setIsFollowed] = useState<boolean>(false)
   const [selectedPost, setSelectedPost] = useState<PostCardProps | null>(null)
+  const { user: currentUser } = useUser()
+  const isCurrentUser = currentUser?.id === user?.id
 
   const handlePostClick = (post: PostCardProps) => {
     setSelectedPost(post)
   }
 
+  const handleFollow = async () => {
+    try {
+      await createRecord<{ user_id: number; dir: number }, { message: string }>("/app/follow/", {
+        user_id: user!.id,
+        dir: isFollowed ? 0 : 1,
+      })
+      setIsFollowed(!isFollowed)
+    } catch (error) {
+      console.error("Failed to follow/unfollow user:", error)
+    }
+  }
+
   if (isLoading) return <LoadingProfile />
 
-  if (!user) return <div className="text-center text-gray-500">User not found</div>;
+  if (!user) return <div className="text-center text-gray-500">User not found</div>
 
-  const publishedPosts = user?.posts?.filter((post) => post.published) || [];
-  const archivedPosts = user?.posts?.filter((post) => !post.published) || [];
+  const publishedPosts = user?.posts?.filter((post) => post.published) || []
+  const archivedPosts = user?.posts?.filter((post) => !post.published) || []
 
   return (
-    <div className="flex flex-col justify-start items-center gap-4 mb-16 lg:mb-2 md:ml-20 min-h-screen w-full md:min-w-[80%] overflow-y">
-      <div className="overflow-hidden w-full">
-        {/* Cover Photo */}
-        <div className="h-48 md:h-64 bg-gradient-to-r from-blue-400 to-purple-500 relative">
-          <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent opacity-50"></div>
-        </div>
-
+    <div className="flex flex-col items-center min-h-screen w-full bg-gradient-to-br from-blue-50 to-purple-50 p-4 md:p-8">
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* User Information Section */}
-        <div className="px-6 py-8 sm:px-8 flex flex-col md:px-10 items-center justify-center -mt-16 relative z-10">
-          <div className="relative w-32 h-32 md:w-40 md:h-40 border-4 border-white rounded-full shadow-md overflow-hidden">
-            <img src={user?.image_url || "/placeholder.svg"} alt={user?.username || "User"} className="object-cover" />
+        <div className="px-6 py-8 sm:px-8 md:px-10 flex flex-col items-center justify-center relative">
+          <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden ring-4 ring-purple-200 shadow-lg mb-6">
+            <img
+              src={user?.image_url || "/placeholder.svg"}
+              alt={user?.username || "User"}
+              className="object-cover w-full h-full"
+            />
           </div>
-          <div className="text-center md:text-left flex flex-col items-center justify-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800">@{user!.username}</h1>
-            <div className="mt-2 flex items-center justify-center md:justify-start text-gray-600">
-              <Mail className="w-4 h-4 mr-2" />
-              <span>{user!.email}</span>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">@{user!.username}</h1>
+          <div className="flex items-center justify-center text-gray-600 mb-4">
+            <Mail className="w-5 h-5 mr-2" />
+            <span>{user!.email}</span>
+          </div>
+          <div className="flex space-x-8 text-sm mb-6">
+            <div className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-gray-800">{user!.follower_count}</span>
+              <span className="text-gray-600">Followers</span>
             </div>
-            <div className="mt-4 flex space-x-4 text-sm">
-              <div className="flex items-center">
-                <UsersIcon className="w-4 h-4 mr-1" />
-                <span>
-                  <strong>{user!.follower_count}</strong> Followers
-                </span>
-              </div>
-              <div className="flex items-center">
-                <UserIcon className="w-4 h-4 mr-1" />
-                <span>
-                  <strong>{user!.following_count}</strong> Following
-                </span>
-              </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-gray-800">{user!.following_count}</span>
+              <span className="text-gray-600">Following</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-gray-800">{publishedPosts.length}</span>
+              <span className="text-gray-600">Posts</span>
             </div>
           </div>
+          {!isCurrentUser && (
+            <Button
+              onClick={handleFollow}
+              className={`${isFollowed
+                  ? 'bg-purple-300 text-purple-600 hover:bg-purple-200'
+                  : 'bg-purple-600 text-white hover:bg-purple-700'
+                } transition-colors duration-300 flex items-center`}
+            >
+              {isFollowed ? (
+                <>
+                  <UserMinus size={20} className="mr-2" />
+                  Unfollow
+                </>
+              ) : (
+                <>
+                  <UserPlus size={20} className="mr-2" />
+                  Follow
+                </>
+              )}
+            </Button>
+          )}
         </div>
 
         {/* Tabs */}
-        <div className="border-b flex items-center justify-center border-gray-200">
-          <nav className="flex justify-center md:justify-start px-6 md:px-10 -mb-px">
+        <div className="border-t border-gray-200">
+          <nav className="flex justify-center">
             <button
               onClick={() => setActiveTab("posts")}
-              className={`py-4 px-6 text-sm font-medium ${
-                activeTab === "posts"
-                  ? "border-b-2 border-blue-500 text-blue-600"
+              className={`py-4 px-6 text-sm font-medium flex items-center ${activeTab === "posts"
+                  ? "text-purple-600 border-b-2 border-purple-500"
                   : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
-              } transition-colors duration-200`}
+                } transition-colors duration-200`}
             >
-              <Grid className="w-5 h-5 inline mr-2" />
+              <Grid className="w-5 h-5 mr-2" />
               Posts
             </button>
-            <button
-              onClick={() => setActiveTab("archive")}
-              className={`py-4 px-6 text-sm font-medium ${
-                activeTab === "archive"
-                  ? "border-b-2 border-blue-500 text-blue-600"
-                  : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
-              } transition-colors duration-200`}
-            >
-              <Archive className="w-5 h-5 inline mr-2" />
-              Archive
-            </button>
+            {isCurrentUser && (
+              <button
+                onClick={() => setActiveTab("archive")}
+                className={`py-4 px-6 text-sm font-medium flex items-center ${activeTab === "archive"
+                    ? "text-purple-600 border-b-2 border-purple-500"
+                    : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  } transition-colors duration-200`}
+              >
+                <Archive className="w-5 h-5 mr-2" />
+                Archive
+              </button>
+            )}
           </nav>
         </div>
 
         {/* Content */}
-        <div className="p-6 sm:p-8 md:p-10 w-full">
-          {activeTab === "posts" && publishedPosts.length !== 0 &&(
+        <div className="p-6 sm:p-8 md:p-10">
+          {activeTab === "posts" && publishedPosts.length !== 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {publishedPosts.map((post) => (
                 <div
                   key={post.id}
-                  onClick={() => handlePostClick({id: post.id, content: post.content, published: post.published, image_url: post.image_url, isLiked: post.isLiked, created_at: post.created_at, owner: user, owner_id: post.owner_id, like_count: post.like_count})}
-                  className="relative aspect-square rounded-lg overflow-hidden group shadow-md transition-transform duration-300 hover:scale-105"
+                  onClick={() =>
+                    handlePostClick({
+                      id: post.id,
+                      content: post.content,
+                      published: post.published,
+                      image_url: post.image_url,
+                      isLiked: post.isLiked,
+                      created_at: post.created_at,
+                      owner: user,
+                      owner_id: post.owner_id,
+                      like_count: post.like_count,
+                    })
+                  }
+                  className="relative aspect-square rounded-lg overflow-hidden group shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer"
                 >
                   <img
                     src={post.image_url || "/placeholder.svg"}
                     alt={post.content}
-                    className="transition-transform duration-300 object-cover group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4">
                     <div className="text-white">
                       <p className="font-semibold truncate">{post.content}</p>
                       <p className="text-sm">{dateFormat(post.created_at)} ago</p>
+                      <div className="flex items-center mt-2">
+                        <Heart className="w-4 h-4 mr-1 text-red-500" />
+                        <span>{post.like_count} likes</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -113,25 +165,45 @@ const Profile = () => {
           )}
 
           {activeTab === "posts" && publishedPosts.length === 0 && (
-            <div className="flex items-center justify-center">No posts to show</div>
+            <div className="flex flex-col items-center justify-center text-gray-500 py-12">
+              <ImageIcon className="w-16 h-16 mb-4 text-gray-400" />
+              <p className="text-xl font-semibold mb-2">No posts yet</p>
+              <p>Start sharing your moments with the world!</p>
+            </div>
           )}
           {activeTab === "archive" && archivedPosts.length !== 0 && (
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {archivedPosts.map((post) => (
                 <div
                   key={post.id}
-                  onClick={() => handlePostClick({id: post.id, content: post.content, published: post.published, image_url: post.image_url, isLiked: post.isLiked, created_at: post.created_at, owner: user, owner_id: post.owner_id, like_count: post.like_count})}
-                  className="relative aspect-square w-full rounded-lg overflow-hidden group shadow-md transition-transform duration-300 hover:scale-105"
+                  onClick={() =>
+                    handlePostClick({
+                      id: post.id,
+                      content: post.content,
+                      published: post.published,
+                      image_url: post.image_url,
+                      isLiked: post.isLiked,
+                      created_at: post.created_at,
+                      owner: user,
+                      owner_id: post.owner_id,
+                      like_count: post.like_count,
+                    })
+                  }
+                  className="relative aspect-square rounded-lg overflow-hidden group shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer"
                 >
                   <img
                     src={post.image_url || "/placeholder.svg"}
                     alt={post.content}
-                    className="transition-transform duration-300 object-cover group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4">
                     <div className="text-white">
                       <p className="font-semibold truncate">{post.content}</p>
                       <p className="text-sm">{dateFormat(post.created_at)} ago</p>
+                      <div className="flex items-center mt-2">
+                        <Heart className="w-4 h-4 mr-1 text-red-500" />
+                        <span>{post.like_count} likes</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -139,10 +211,15 @@ const Profile = () => {
             </div>
           )}
           {activeTab === "archive" && archivedPosts.length === 0 && (
-            <div className="flex items-center justify-center">No archives to show</div>
+            <div className="flex flex-col items-center justify-center text-gray-500 py-12">
+              <Archive className="w-16 h-16 mb-4 text-gray-400" />
+              <p className="text-xl font-semibold mb-2">No archived posts</p>
+              <p>Your archived posts will appear here</p>
+            </div>
           )}
         </div>
       </div>
+
       {/* Post Popup */}
       <Dialog open={selectedPost !== null} onClose={() => setSelectedPost(null)}>
         <div className="fixed inset-0 bg-black/30 z-50" aria-hidden="true" />
@@ -179,34 +256,25 @@ const Profile = () => {
 
 const LoadingProfile = () => {
   return (
-    <div className="flex flex-col justify-start items-center gap-4 mb-16 lg:mb-2 md:ml-20 min-h-screen w-full md:min-w-[80%] overflow-y animate-pulse">
-      <div className="overflow-hidden w-full">
-        {/* Cover Photo */}
-        <div className="h-48 md:h-64 bg-gray-300"></div>
-
-        {/* User Information Section */}
-        <div className="px-6 py-8 sm:px-8 flex flex-col md:px-10 items-center justify-center -mt-16 relative z-10">
-          <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-gray-300"></div>
-          <div className="text-center md:text-left flex flex-col items-center justify-center">
-            <div className="w-48 h-8 bg-gray-300 rounded"></div>
-            <div className="mt-2 w-40 h-4 bg-gray-300 rounded"></div>
-            <div className="mt-4 flex space-x-4">
-              <div className="w-24 h-4 bg-gray-300 rounded"></div>
-              <div className="w-24 h-4 bg-gray-300 rounded"></div>
-            </div>
+    <div className="flex flex-col items-center min-h-screen w-full bg-gradient-to-br from-blue-50 to-purple-50 p-4 md:p-8">
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden animate-pulse">
+        <div className="px-6 py-8 sm:px-8 md:px-10 flex flex-col items-center justify-center relative">
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gray-300 mb-6"></div>
+          <div className="w-48 h-8 bg-gray-300 rounded mb-2"></div>
+          <div className="w-40 h-4 bg-gray-300 rounded mb-4"></div>
+          <div className="flex space-x-8 mb-6">
+            <div className="w-20 h-16 bg-gray-300 rounded"></div>
+            <div className="w-20 h-16 bg-gray-300 rounded"></div>
+            <div className="w-20 h-16 bg-gray-300 rounded"></div>
           </div>
         </div>
-
-        {/* Tabs */}
-        <div className="border-b flex items-center justify-center border-gray-200">
-          <nav className="flex justify-center md:justify-start px-6 md:px-10 -mb-px">
+        <div className="border-t border-gray-200">
+          <div className="flex justify-center p-4">
             <div className="w-24 h-10 bg-gray-300 rounded mr-4"></div>
             <div className="w-24 h-10 bg-gray-300 rounded"></div>
-          </nav>
+          </div>
         </div>
-
-        {/* Content */}
-        <div className="p-6 sm:p-8 md:p-10 w-full">
+        <div className="p-6 sm:p-8 md:p-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {[...Array(6)].map((_, index) => (
               <div key={index} className="aspect-square rounded-lg bg-gray-300"></div>

@@ -9,8 +9,8 @@ import Home from "@/pages/Home";
 import Search from "@/pages/Search";
 import CreatePost from "@/pages/CreatePost";
 import Login from "@/pages/Login";
-import Test from "@/pages/Test";
-import Profile from "./pages/Profile";
+import ChatPage from "@/pages/Chat";
+import Profile from "@/pages/Profile";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/post" element={<CreatePost />} />
             <Route path="/user/:id" element={<Profile />} />
-            <Route path="/chat" element={<Test />} />
+            <Route path="/chat" element={<ChatPage />} />
           </Route>
         <Route path="/auth/register" element={<Registration />} />
         <Route path="/auth/login" element={<Login />} />

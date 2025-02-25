@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 // types
 import { UsersSuggestions } from "@/types/user";
-import FollowButton from "../button/FollowButton";
 
 const Suggestions = () => {
   const { user, handleGetAccessToken } = useUser();
@@ -44,7 +43,7 @@ const Suggestions = () => {
                   @{suggestion.username}
                 </p>
               </div>
-              <FollowButton id={suggestion.id}/>
+              {/* <FollowButton id={suggestion.id}/> */}
             </div>
           ))}
         </div>

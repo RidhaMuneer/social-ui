@@ -32,7 +32,7 @@ const Registration = () => {
     formData.append("file", file)
 
     try {
-      const response = await createRecord<FormData, {access_token: string}>('/app/register', formData)
+      const response = await createRecord<FormData, { access_token: string }>("/app/register", formData)
       handleSetAccessToken(response.access_token)
       navigate("/home")
     } catch (error) {
@@ -53,9 +53,9 @@ const Registration = () => {
 
   const hexagonalPattern = {
     "--s": "92px",
-    "--c1": "#f2f2f2",
-    "--c2": "#c2d4ff",
-    "--c3": "#2563eb",
+    "--c1": "#f3e8ff",
+    "--c2": "#e9d5ff",
+    "--c3": "#d8b4fe",
     "--_g": "0 120deg,#0000 0",
     background: `
       conic-gradient(at calc(250%/3) calc(100%/3),var(--c3) var(--_g)),
@@ -70,7 +70,7 @@ const Registration = () => {
   } as React.CSSProperties
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
       {/* Hexagonal pattern */}
       <div className="md:w-1/2 fixed top-0 left-0 w-full md:relative h-64 md:h-auto" style={hexagonalPattern} />
 
@@ -87,12 +87,12 @@ const Registration = () => {
                 <img
                   src={selectedImage! || "/placeholder.svg"}
                   alt="Selected"
-                  className="rounded-full w-24 h-24 object-cover border-4 border-blue-500"
+                  className="rounded-full w-24 h-24 object-cover border-4 border-purple-500"
                   onClick={() => document.getElementById("fileInput")?.click()}
                   style={{ cursor: "pointer" }}
                 />
                 <div
-                  className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-2 cursor-pointer"
+                  className="absolute bottom-0 right-0 bg-purple-500 rounded-full p-2 cursor-pointer"
                   onClick={() => document.getElementById("fileInput")?.click()}
                 >
                   <Camera className="w-4 h-4 text-white" />
@@ -104,33 +104,33 @@ const Registration = () => {
             {errors.file && <p className="text-sm text-red-600">{errors.file.message as string}</p>}
             <div className="space-y-4">
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400" size={20} />
                 <input
                   type="text"
                   placeholder="Username"
-                  className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="pl-10 w-full px-3 py-2 border border-purple-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   {...register("username", { required: "Username is required" })}
                 />
               </div>
               {errors.username && <p className="text-sm text-red-600">{errors.username.message as string}</p>}
 
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400" size={20} />
                 <input
                   type="email"
                   placeholder="Email"
-                  className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="pl-10 w-full px-3 py-2 border border-purple-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   {...register("email", { required: "Email is required" })}
                 />
               </div>
               {errors.email && <p className="text-sm text-red-600">{errors.email.message as string}</p>}
 
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400" size={20} />
                 <input
                   type="password"
                   placeholder="Password"
-                  className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="pl-10 w-full px-3 py-2 border border-purple-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   {...register("password", { required: "Password is required" })}
                 />
               </div>
@@ -142,7 +142,7 @@ const Registration = () => {
             <div>
               <button
                 type="submit"
-                className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors ${
+                className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors ${
                   isSubmitting ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 disabled={isSubmitting}
@@ -164,7 +164,7 @@ const Registration = () => {
 
           <p className="mt-2 text-center text-sm text-gray-600">
             Already have an account?{" "}
-            <Link to="/auth/login" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+            <Link to="/auth/login" className="font-medium text-purple-600 hover:text-purple-500 transition-colors">
               Sign in
             </Link>
           </p>
