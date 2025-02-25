@@ -34,7 +34,7 @@ const Registration = () => {
     try {
       const response = await createRecord<FormData, { access_token: string }>("/app/register", formData)
       handleSetAccessToken(response.access_token)
-      navigate("/home")
+      navigate("/")
     } catch (error) {
       setError("api", {
         type: "manual",

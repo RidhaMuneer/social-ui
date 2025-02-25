@@ -25,7 +25,7 @@ const Login = () => {
       const response = await createRecord<FormData, { access_token: string }>("/app/login", formData)
 
       handleSetAccessToken(response.access_token)
-      navigate("/home")
+      navigate("/")
     } catch (error) {
       setMessage("Invalid credentials")
     } finally {
