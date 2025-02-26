@@ -53,14 +53,10 @@ This frontend connects to the **Social Media API** to handle user authentication
 - View User Status (Followers, Following)
 - Image Storage using AWS S3
 - Protected Routes for authenticated users (In progess still)
+- Real-time peer-to-peer chat using websockets
 
 For detailed API documentation, visit the backend repository:  
 👉 [Social Media API Repository](https://github.com/RidhaMuneer/social-core)
-
-## Development Notes
-- The chat feature using **PeerJS** is still under development.
-- UI is styled using **TailwindCSS** for fast and efficient styling.
-- State management is handled using **React hooks**.
 
 ## Contribution
 Feel free to contribute by submitting issues or pull requests.
