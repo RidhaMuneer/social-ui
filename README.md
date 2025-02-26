@@ -9,7 +9,7 @@ Welcome to the frontend repository of the Social Media App! This project is buil
 - **TypeScript** - Statically typed JavaScript for better maintainability
 - **TailwindCSS** - Utility-first CSS framework for styling
 - **Axios** - HTTP client for API requests
-- **PeerJS** - WebRTC-based peer-to-peer communication for real-time chat (in development)
+- **Websockets** - peer-to-peer communication for real-time chat
 
 ## Getting Started
 
